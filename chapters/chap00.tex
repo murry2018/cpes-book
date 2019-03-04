@@ -1,0 +1,447 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+C언어의 기초 내용을 학습하기 전에, 기본적인 도구들을 익힌다. 다음 내용을 배우게 된다.
+\begin{itemize}
+\item \texttt{printf}를 이용해 출력하기
+\item 주석을 이용해 프로그램을 설명하기
+\item 변수를 선언하고, 간단한 연산자들을 이용해 계산하기
+\end{itemize}
+
+\label{sec:0.1}
+\section{Hello World!}
+
+아래 예제를 컴파일하고 실행하면 콘솔 화면에서 ``Hello World!''라는
+문구를 볼 수 있을 것이다.\footnote{이 작은 예제는 C언어의 창시자인
+  Dennis Ritchie와 그의 동료인 Brian Kernighan이 쓴 교재 ``The C
+  Programming Language''(저자의 두문을 따 K\&R이라고도 불린다)에서
+  유래한 역사적인 예제이다. C언어와 K\&R이 가진 역사적 의미를 기리며,
+  많은 교재들이 이와 비슷한 예제를 첫 예제로 채택하고 있다.}
+\begin{verbatim}
+/*--- 예제 0.1 HelloWorld.c ---*/
+#include <stdio.h>
+
+int main() {
+  printf("Hello World!");
+}
+\end{verbatim}
+
+\subsection{Details}
+\begin{enumerate}
+\item \texttt{printf(문자열)}는
+  \textbf{문자열}\footnote{문자열(string)이라는 어휘가 생소할 수
+    있다. 문자열은 단일 문자들이 늘어선 것을 말한다. C 프로그래밍을
+    하면서 어떤 문자든지 모이면 문자열이 될 수 있음을 보게 될
+    것이다. 심지어는 \texttt{"} \hspace{5mm} \texttt{"}와 같은 일련의
+    공백도 문자열로 취급한다.}을 \textbf{출력}한다.\footnote{출력이라는
+    어휘는 print라는 영단어를 직역한 것이다. 이 책 전반에 걸쳐서
+    출력이란 말은 대부분 화면에 나타내는 것을 이야기하지만, 프로그래밍
+    할 때에는 종종 output의 의미로 쓰이기도 하기 때문에 섣불리 번역을
+    고칠 수 없는 어휘이다.} 문자열은 \texttt{"String"}와 같이 따옴표로
+  둘러싸인 형태이다.
+\item \texttt{/* ... */}는 프로그램을 설명하기 위해 쓰는 것이다. 이러한
+  설명을 \textbf{주석}이라고 하며 비슷한 형태의 주석을 앞으로 예제
+  곳곳에서 보게 될 것이다. 주석을 쓰는데는 특별한 룰이 없지만, 반드시
+  \texttt{/*}와 \texttt{*/} 사이에 써야 한다.
+\end{enumerate}
+
+\textbf{주의} : ``\texttt{printf("Hello World!")}''뒤에
+세미콜론("\texttt{;}")이 따라 붙음에 주의하라. 앞으로 실습을 하면서
+세미콜론을 아주 자주 보게 될 것이다.
+
+이것으로 이 작은 프로그램에 대해 어느정도 설명이 된 것 같지만, 설명하지
+않고 남은 것이 있다.
+
+\begin{verbatim}
+#include <stdio.h>
+
+int main() {
+
+}
+\end{verbatim}
+
+여러분은 모두 이것에 대해 궁금해하겠지만, 아직은 설명할 때가 되지
+않았다. 지금은 이것을 프로그램의 기본 골격이라고 생각하자. 즉, 프로그램의
+내용은 ``\texttt{int main() \{}''와 ``\texttt{\}}'' 사이에 있어야
+한다는 사실만 알아두자. 이것에 대해서는 머지않아 설명할 기회가 있을
+것이다.
+
+\section{간단한 수학}
+다음은 혈중 알코올 농도를 추정하는 공식이다. \footnote{이 공식은
+  스웨덴의 생리학자 Widmark가 20세기 초 제안한 것을 도로교통공단에서
+  우리나라의 실정에 맞게 수정한 것이다. Widmark 공식이라고도 하는데,
+  음주 운전 사고 발생 시 운전자 음주 상태를 역추산하는데 쓰인다. 법정
+  참고자료로 이용되긴 하지만, 사람마다 계산 조건이 조금씩 다르기 때문에
+  결정적 증거능력을 갖고 있지는 않다.}
+
+$$ C_{t} = 0.0553 \times \frac{A_{drink} \times A_{concentration}}{ P \times R} - 0.015(t - 1.5) $$
+
+이 때, 각 문자들은 이런 의미를 지니고 있다.
+
+\begin{tabular}{l l}
+  $C_{t}$ & :혈중 알코올 농도 \\
+  $A_{drink}$ & :음주량(ml) \\
+  $A_{concentration}$ & :술의 농도(100\% = 1로 계산)\\
+  $P$ & :음주자의 체중(kg) \\
+  $R$ & :개인 계수
+        (나이와 성별에 따라 다르지만, 주로 남성 0.68, 여성 0.55 이용) \\
+  $t$ & :음주 후 경과 시간
+        (단, 90분보다 작으면 올바른 추정이 불가능하다. 즉, $t \geq 1.5$)
+\end{tabular}
+
+사칙 연산만으로 이루어져 있어 그리 복잡하지 않지만, 손으로 계산하기에는
+여간 번거롭지 않다. 마침 컴퓨터는 계산을 위해 만들어진 것이니, 우리도
+컴퓨터에게 계산을 시켜보자.
+
+먼저 이 공식을 C언어가 지원하는 형태로 옮겨보면 다음과 같은 코드가
+된다(코드가 \texttt{int main() \{ ... \}} 안에 있지 않으므로 온전한
+프로그램은 아니다).
+
+\begin{verbatim}
+double A_drink, A_concentration, P, R, t, C_t;
+A_drink = 500;           /* 음주량 */
+A_concentration = 0.05;  /* 술의 농도 */
+P = 70;                  /* 음주자의 체중 */
+R = 0.68;                /* 남성을 의미. 여성의 경우 0.55 */
+t = 2;                   /* 경과 시간 */
+/* 혈중 알코올 농도 계산 */
+C_t = 0.0553 * (A_drink * A_concentration) / (P * R) - 0.015 * (t - 1.5);
+\end{verbatim}
+
+물론 \texttt{A\_drink, A\_concentration, P, R, t}에 넣은 값들은 임의로
+집어넣은 것이다. 이 경우, 5도짜리 맥주 500ml를 마신 뒤 2시간이 지난
+70kg 남성을 의미한다. 이 값들은 본인이 원하는 대로 바꾸어도
+좋다. 참고로, 소주 한병의 용량은 360ml이고, 도수는 16 $\sim$ 19도(즉,
+알콜 농도 0.16 $\sim$ 0.19) 정도이다.
+
+\subsection{Details}
+\begin{enumerate}
+\item 맨 첫 줄에서 \texttt{A\_drink, A\_concentration, P, R, t, C\_t}의
+  이름을 미리 \textbf{선언}\small{declaration}해주었다. 이러한 이름들이
+  필요할 것이니 기억해 두라는 뜻이다. 이렇게 선언된 이름들을
+  \textbf{변수}라고 부르고, 변수에 담긴 값은 \textbf{변수 값}이라고
+  부른다.
+\item 첫 줄 맨 앞의 \texttt{double}은 후술할 이름들이 \texttt{double}
+  형식의 값을 가질 것이라는 것을 의미한다. 뒤에서 자세히 설명할 기회가
+  있겠지만, \texttt{double}은 일반적인 숫자를 의미한다.
+\item 모든 문장의 끝에 세미콜론(;)이 붙어있음을 주목하라. 세미콜론을
+  빠뜨린다면 무시무시한 오류를 맞이하게 될 것이다.
+\item 주석은 코드를 설명하기 위한 것일 뿐이니, 아무 곳에 붙어있어도
+  상관 없다. 이쁘게 보이게 하려고, 공백을 넣어 주석을 일렬로
+  맞추었다. 실제로는 공백을 넣지 않아도 괜찮다.
+\item 마지막 줄, 수학 식에서 곱하기 기호($\times$)는
+  애스터리스크(\texttt{*})로 바뀌었다.
+\end{enumerate}
+
+\label{sec:0.2.2}
+\subsection{온전한 C 프로그램으로 고치기}
+이것을 완전한 C 프로그램으로 바꾸어 보면 다음과 같다.
+
+\begin{verbatim}
+/*--- 예제 0.2 CalcBAC.c ---*/
+#include <stdio.h>
+
+int main() {
+  double A_drink, A_concentration, P, R, t, C_t;
+  A_drink = 500;           /* 음주량 */
+  A_concentration = 0.05;  /* 술의 농도 */
+  P = 70;                  /* 음주자의 체중 */
+  R = 0.68;                /* 남성을 의미. 여성의 경우 0.55 */
+  t = 2;                   /* 경과 시간 */
+  /* 혈중 알코올 농도 계산 */
+  C_t = 0.0553 * (A_drink * A_concentration) / (P * R) - 0.015 * (t - 1.5);
+  /* 계산 값 출력 */
+  printf("Blood Alcohol Concentration : %f", C_t);
+}
+\end{verbatim}
+
+컴파일하고 실행하면 다음과 같이 계산된다.
+\begin{verbatim}
+Blood Alcohol Concentration : 0.021544
+\end{verbatim}
+
+변수들 (\texttt{A\_drink, A\_concentration, P, R, t})의 값을
+바꾸어가면서, 예상했던 대로 혈중 알코올 농도가 바뀌는 지 살펴보자.
+
+\subsection{Details}
+\begin{enumerate}
+\item 컴퓨터가 그저 계산을 하는 것 만으로는 충분치 않다. 만약
+  \texttt{printf()} 구문을 우리가 쓰지 않았다면, 이 프로그램은 아무
+  것도 보여주는 일 없이 종료할 것이다. 
+\item \texttt{printf()}가 우리가 섹션 \hyperref[sec:0.1]{0.1}에서
+  보았던 것과는 사뭇 다르다. \texttt{printf}는 문자열을 출력하는 것
+  말고도 한가지 기능을 더 가지고 있는 데, 바로 문자열을
+  \textbf{포매팅}\small{formatting}하는 것이다. 여기서는
+  \texttt{"\%f"}를 통해 문자열을 포매팅했다. \texttt{"\%f"}는 문자열과
+  함께 들어온 다른 값을 출력한다. 여기서 다른 값이란, \texttt{C\_t}를
+  말한다. \texttt{printf}에는 \texttt{"\%f"}을 비롯한 많은 \textbf{서식
+    지정자}\small{format specifier}가 있다. 이 책에서는 그 모두를
+  다루지 않겠지만, 앞으로 몇 가지를 더 소개하게 될 것이다.
+\end{enumerate}
+
+\section{의사 결정}
+섹션 \hyperref[sec:0.2.2]{0.2.2}에서 만든 CalcBAC 프로그램은 그저
+계산기에 불과하다. 이것만으로는 어떤 의미있는 결론을 도출해 내기
+어렵다. 프로그램을 좀 더 의미있게 만들어 보자.
+
+도로교통공단에 따르면, 음주 운전 시 받는 운전면허 행정처분은 다음과 같다.
+
+\begin{tabular}{ c | c }
+  혈중 알코올 농도 & 행정처분\\
+  \hline
+  0.05\% 미만 & 훈방\\
+  0.05 $\sim$ 0.10\% & 벌점 100점\\
+  0.10\% 이상 & 면허 취소(결격 1년)
+\end{tabular}
+
+C의 if와 else는 이러한 조건을 나타내기에 적합하다. 다음 코드를 보자.
+
+\begin{verbatim}
+if (C_t < 0.05) {
+  printf("훈방");
+} else if (C_t < 0.1) {
+  printf("벌점 100점");
+} else {
+  printf("면허 취소(결격 1년)");
+}
+\end{verbatim}
+
+\subsection{Details}
+\begin{enumerate}
+\item \texttt{if}는 이런 형태를 가진다.
+\begin{verbatim}
+if (조건) {
+  조건이 참이면 실행할 코드
+}
+\end{verbatim}
+  \texttt{if}는 프로그램의 실행 흐름을 조절할 수 있다. 조건에 따라 어느
+  코드가 실행될 지 결정할 수 있기 때문이다. 이렇게 프로그램의 실행
+  흐름을 조절하는 요소를 \textbf{제어문}이라고 한다. 그리고 우리는
+  \texttt{if}와 \texttt{else}가 제어하는 영역을 각각 \textbf{if 문},
+  \textbf{else 문}이라고 부른다.
+\item \texttt{else}는 앞의 if문에서 조건이 거짓일 때 실행된다. 바꾸어
+  말해, 짝을 이루는 if문이 참이라면 else문은 실행되지 않는다. 따라서,
+  첫번째 if문의 조건(\texttt{C\_t \textlangle{} 0.05})이 거짓이라면
+  \texttt{C\_t}는 0.05보다 크거나 같다는 사실이 이미 드러난 것이므로,
+  구태여 두 번째 if문의 조건(\texttt{C\_t \textlangle{} 0.1})에서
+  \texttt{C\_t}가 0.05보다 크거나 같다는 사실을 적어줄 필요가 없다. 맨
+  아래의 else에서도 마찬가지이다.
+\item 앞의 것이 작다는 뜻의 기호를 ``\verb|<|''로 적은 것이 매우
+  자연스럽게 보일 것이다. 비슷하게, 앞의 것이 크다는 뜻의 기호는
+  ``\verb|>|''이다. 하지만 ``$\leq$''와 ``$\geq$''는 다르게
+  표현된다. 이들은 각각 ``\verb|<=|''와 ``\verb|>=|''로
+  표현한다. 이들은 \textbf{관계 연산자}로 불리며, 오직 두개의 대상만을
+  비교할 수 있다. 따라서, $ a \leq b \leq c $는 \verb|a <= b <= c|로
+  표현하는 게 자연스럽지만, 대부분의 경우 C언어는 이것을 올바로
+  해석하지 못한다. 이것의 해결 방법은 나중에 살펴보도록 하자.
+\end{enumerate}
+
+\subsection{CalcBAC 프로그램 업그레이드}
+
+어떤 부품을 써야할 지 알게 되었으니, 이제 그 부품을 사용해 CalcBAC
+프로그램을 업그레이드 해보자.
+
+\begin{verbatim}
+/*--- 예제 0.3 CalcBAC.c ---*/
+#include <stdio.h>
+
+int main() {
+  double A_drink, A_concentration, P, R, t, C_t;
+  A_drink = 500;           /* 음주량 */
+  A_concentration = 0.05;  /* 술의 농도 */
+  P = 70;                  /* 음주자의 체중 */
+  R = 0.68;                /* 남성을 의미. 여성의 경우 0.55 */
+  t = 2;                   /* 경과 시간 */
+  /* 혈중 알코올 농도 계산 */
+  C_t = 0.0553 * (A_drink * A_concentration) / (P * R) - 0.015 * (t - 1.5);
+  /* 계산 값 출력 (1): 혈중 알코올 농도 수치 */
+  printf("Blood Alcohol Concentration : %f\n", C_t);
+  /* 계산 값 출력 (2): 행정 처분 결과 */
+  if (C_t < 0.05) {
+    printf("훈방");
+  } else if (C_t < 0.1) {
+    printf("벌점 100점");
+  } else {
+    printf("면허 취소(결격 1년)");
+  }
+}
+\end{verbatim}
+
+섹션 \hyperref[sec:0.2.2]{0.2.2}에서 선보인 구버전의 CalcBAC에서 코드를
+조금 덧붙여 수정했다.
+
+실행 결과는 다음과 같다.
+\begin{verbatim}
+Blood Alcohol Concentration : 0.021544
+훈방
+\end{verbatim}
+
+변수들(\texttt{A\_drink, A\_concentration, P, R, t})의 값을
+바꾸어가면서, 이만큼 마시고 훈방을 받으려면 얼마나 기다려야 할 지
+확인해보자. 물론 사람마다 계산 조건이 조금씩 다르므로 전적으로 믿지는
+말고, 재미로만 보도록 하자.
+
+\subsection{Details}
+\begin{enumerate}
+\item 혈중 알코올 농도 수치를 표시하는 첫 번째 \texttt{printf()} 구문이
+  구버전과 비교해 조금 달라졌다. 포매팅된 문자열의 맨 끝을 보면,
+  ``\texttt{\textbackslash{}n}''이 추가된 걸 알게 될 것이다. 이것의
+  역할은 한 줄을 띄워주는 것이다. 이 특별한 문자는 앞으로 요긴하게
+  쓰인다. 잘 기억해두자.
+\end{enumerate}
+
+\section{Summary}
+\subsection{Terms}
+\begin{itemize}
+\item \textbf{문자열}은 단일 문자들이 늘어선 것을 말한다. C에서
+  문자열은 한 쌍의 따옴표 \texttt{" "}로 둘러싸여 있다.
+\item \textbf{출력}이란 화면으로 내보내는 것을 말한다. 더 넓은
+  의미로는, Output의 의미로 사용되기도 한다. C에서 화면으로의 출력은
+  \texttt{printf()}로 가능하다.
+\item \textbf{주석}은 프로그램을 설명하기 위해 사용한다. C에서 주석은
+  \texttt{/* ... */} 사이에 있기만 하면 된다.
+\item C에서는 앞으로 쓰일 이름들을 미리 \textbf{선언}해 주어야 한다.
+\item 값을 갖는 이름들을 \textbf{변수}라고 부른다. C에서 변수는 다음과
+  같이 선언한다.
+\begin{verbatim}
+double variable1;
+\end{verbatim}
+  혹은, 한번에 여러 개의 변수를 선언하려면,
+\begin{verbatim}
+double variable_x, variable_y, variable_z;
+\end{verbatim}
+\item 프로그램의 실행 흐름(순서)를 조절하는 요소를 \textbf{제어문}이라
+  한다. \textbf{if 문}과 \textbf{else 문}은 제어문이다.
+\item 두 값을 비교하는 연산자들을 \texttt{관계 연산자}라고
+  부른다. C에는 \verb|<, >, <=, >=|등의 관계 연산자가 있다.
+\end{itemize}
+\subsection{Tools}
+\begin{itemize}
+\item 프로그램의 기본 형식은 다음과 같다.
+\begin{verbatim}
+#include <stdio.h>
+
+int main() {
+
+}
+\end{verbatim}
+  모든 코드는 \texttt{int main() \{ ... \}} 안에 있어야 한다.
+\item 코드의 모든 문장마다 세미콜론(\texttt{;})을 붙여 주어야
+  한다. 예를 들어, 다음과 같은 코드는 적합하지 않다.
+\begin{verbatim}
+t = 2
+printf("Number 't' is : %f", t)
+\end{verbatim}
+  이는 컴퓨터가 C 코드를 읽을 때 개행이나 들여쓰기 같은 것에 영향을
+  받지 않기 때문이다. 예를 들어, 다음과 같은 코드는 완전히 올바른
+  코드이다.
+\begin{verbatim}
+t = 2; printf("Number 't' is: %f", t);
+\end{verbatim}
+  단지 문장 끝마다 세미콜론(\texttt{;})을 붙여 주기만 하면 된다.
+\item \texttt{double}은 일반적인 숫자를 의미한다. 다음과 같은 변수
+  선언은 \texttt{variable}이 \texttt{double} 형식의 값을 가진다는 것을
+  의미한다.
+\begin{verbatim}
+double variable;
+\end{verbatim}
+\item 변수에 값을 담을 때, \texttt{=} 연산자를 이용한다. 수학에서의
+  동치 연산자($=$)와 비슷해 보이지만, 아주 같은 역할을 하진 않는다는
+  것을 머지 않아 알게 될 것이다.
+\begin{verbatim}
+variable = 2.5;
+\end{verbatim}
+  이러한 경우, \texttt{variable}에는 2.5라는 값이 담겨있다.
+\item \texttt{printf()}는 주어진 \textbf{서식 문자열}\small{format
+    string}을 출력한다. 서식 문자열이란 말은 순전히 C언어를 위해서
+  만들어진 용어이다. \texttt{printf()}은 그냥 문자열을 출력할 수도
+  있는데, 다음과 같이 하면 된다.
+\begin{verbatim}
+printf("Hello, World!");
+\end{verbatim}
+  서식 문자열을 출력하려면 다음과 같이 하면 된다.
+\begin{verbatim}
+printf("The number: %f", C_t);
+\end{verbatim}
+  \texttt{\%f}는 그대로 출력되지 않고, \texttt{C\_t}로부터 값을 받아
+  그 값을 출력한다.
+
+  \textbf{참고}: \texttt{\%f}를 있는 그대로 출력하고 싶다면
+  \texttt{\%}를 표현하는 특별한 형태인 \texttt{\%\%}를 통해서 할 수
+  있다. 예를 들어, 다음 코드는 \texttt{\%f}를 화면에 출력한다.
+\begin{verbatim}
+printf("%%f");
+\end{verbatim}
+\item C의 문자열에서는 개행(한 줄을 띄우는 것)을 표현하기 위해
+  \texttt{"\textbackslash{}n"}을 이용한다. 예를 들어, 다음 코드의
+  출력은:
+\begin{verbatim}
+printf("Hello,\nWorld!\n");
+\end{verbatim}
+  다음과 같다.
+\begin{verbatim}
+Hello,
+World!
+\end{verbatim}
+\end{itemize}
+
+\section{연습문제}
+\paragraph{문제 0.5.0} 모든 예제(예제 0.1, 0.2, 0.3)들을 컴파일하고,
+실행해보라. 특별히, 예제 0.2와 0.3은 변수 값들을 바꾸어보며 그 때마다
+결과가 다름을 확인해보자.
+\paragraph{문제 0.5.1} 다음 코드를 보자. 이 C 프로그램이 컴파일이
+되겠는지 예측해보고, 실제 컴파일 해서 결과를 살펴보자.
+\begin{verbatim}
+int main() { }
+\end{verbatim}
+\paragraph{문제 0.5.2} 예제 0.1에서, \verb|#include <stdio.h>|를 빼고
+컴파일 해보자. 어떤 에러가 발생하는가? 이 문제와 문제 0.5.1의 결과를
+토대로, \texttt{printf()}가 어디에서 오는 것인지 생각해보자.
+\paragraph{문제 0.5.3} 다음과 같이 화면에 출력하도록 프로그램을
+만들어보라.
+\begin{verbatim}
+C Programming
+for Beginners
+\end{verbatim}
+\textbf{귀띔} : 어떻게 한 줄을 띄우는 지 모르겠다면, 섹션 0.3.3을
+참고하라.
+\paragraph{문제 0.5.4} \texttt{double}값을 갖는 네 변수 \texttt{x1,
+  y1, x2, y2}를 선언하고, 좌표평면 상의 두 점 $P\langle{}$\texttt{x1,
+  y1}$\rangle{}$, $Q\langle{}$\texttt{x2, y2}$\rangle{}$ 사이의 맨해튼
+거리\small{manhattan distance}를 계산해 출력하는 프로그램을
+만들어라(맨해튼 거리가 무엇인지 모르겠다면, 인터넷을 이용해 맨해튼
+거리가 무엇인지 찾아보자. 어렵지 않은 개념이니 금방 이해할 수 있을
+것이다). 단, 편의를 위해 \texttt{x2} $>$ \texttt{x1} 이고 \texttt{y2}
+$>$ \texttt{y1}이라 하자.
+
+다음은 맨해튼 거리의 몇 가지 예시이다.
+
+\begin{itemize}
+\item 두 점 $P\langle{}1, 2\rangle{}$, $Q\langle{}3, 4\rangle{}$ 사이의
+  맨해튼 거리는 4이다.
+\item 두 점 $P\langle{}2.5, 3.1\rangle{}$, $Q\langle{}9, 7\rangle{}$
+  사이의 맨해튼 거리는 10.4이다.
+\end{itemize}
+
+\textbf{귀띔} : 맨해튼 거리를 담을 변수 \texttt{distance}를 선언하고,
+우리가 예제 0.2에서 했던 것과 같이 \texttt{distance}에 계산 결과를 넣어보라.
+
+\paragraph{문제 0.5.5} 어떤 변수 \texttt{x}에 대해 \texttt{x}의
+절댓값을 출력하는 프로그램을 만들어 보라. 절댓값은 다음과 같이 계산된다.
+
+\[
+  |x| = \left\{
+    \begin{tabular}{l l}
+      $x$ & if $x \geq 0$\\
+      $-x$ & if $x < 0$
+    \end{tabular}
+  \right.
+\]
+
+\paragraph{문제 0.5.6} 문제 0.5.4에서 더 나아가, \texttt{x2} $>$
+\texttt{x1} 이고 \texttt{y2} $>$ \texttt{y1}가 아닐때도 맨해튼 거리를
+구하도록 해보자.
+
+\textbf{귀띔} : 두 좌표의 대소 관계에 상관 없이 맨해튼 거리를 계산하기
+위해서는 절댓값을 이용해야 한다. 문제 0.5.5에서 배운 내용을 토대로
+절댓값을 계산해보자.
+\end{document}

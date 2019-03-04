@@ -1,0 +1,30 @@
+\documentclass{report}
+\usepackage[a4paper, margin=3cm]{geometry}
+\usepackage{kotex}
+\usepackage{marginnote} % \marginnote{}
+\usepackage{textcomp} % \textlangle{}, \textrangle{}, $\sim$
+\usepackage[hidelinks]{hyperref} % \url{}
+\usepackage{csquotes} % \displayquote
+\usepackage{amsfonts} % \mathbb
+\usepackage{subfiles} % \subfile
+
+% 문단간격, 행간격 설정
+\setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1.6}
+
+\title{C Programming by Examples and Summary}
+\author{이정연}
+
+\begin{document}
+\begin{titlepage}
+\maketitle  
+\end{titlepage}
+
+\chapter*{Preface}
+\subfile{chapters/preface.tex}
+
+\setcounter{chapter}{-1}
+\chapter{기본적인 도구들}
+\subfile{chapters/chap00.tex}
+
+\end{document}
